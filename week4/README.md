@@ -9,6 +9,3 @@
 
 **KUDOS!!!**
 
-**Warm Regards,**
-\
-**Piyush Sambhi**
