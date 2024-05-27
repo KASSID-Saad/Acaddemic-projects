@@ -1,0 +1,28 @@
+{% extends "base/index.html" %}
+
+{% block title %}Delete Task ({{ task }}){% endblock title %}
+
+{% block content %}
+
+<!-- Display individual task details -->
+<div class="task-wrapper">
+    <div class="task-title">
+        {% if task.complete %}
+            <div class="task-complete-icon"></div>
+            <i style="margin-left:10px"><s>{{ task.title }}</s></i>
+        {% else %}
+            <div class="task-incomplete-icon"></div>
+            <i style="margin-left:10px">{{ task.title }}</i>
+        {% endif %}
+    </div>
+    <div class="task-details">
+        <p>{{ task.description }}</p>
+    </div>
+    <div class="btn">
+        <!-- Add button to edit description -->
+        <a class="btn btn-primary" href="{% url 'edit-description' task.id %}">Edit Description</a>
+    </div>
+</div>
+
+
+{% endblock content %}

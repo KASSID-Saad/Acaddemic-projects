@@ -1,0 +1,49 @@
+{% extends "base/index.html" %}
+
+{% block title %}To-Do List{% endblock title %}
+
+{% block content %}
+
+    <div class="header-bar">
+        <div>
+            <h1>Hello {{request.user|title}}</h1>
+            <h3>You Have <span style="color: red;">{{ count }}</span> incomplete task{{ count|pluralize:"s"}}</h3>
+        </div>
+    </div>
+
+    <div class="container" style="margin: 100px auto;">
+        {% for task in tasks %}
+            <div class="task-wrapper">
+                {% if task.complete %}
+                    <div class="task-title">
+                        <div class="task-complete-icon"></div>
+                        <i style="margin-left:10px"><s>{{task}}</s></i>
+                    </div>
+                {% else %}
+                    <div class="task-title">
+                        <div class="task-incomplete-icon"></div>
+                        <i style="margin-left:10px">{{task}}</i>
+                    </div>
+                {% endif %}
+                <div class="btn">
+                    {% if not task.complete %}
+                        <form method="POST" action="{% url 'complete-task' task.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Complete</button>
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{% url 'incomplete-task' task.id %}" style="display:inline;">
+                            {% csrf_token %}
+                        <button type="submit" class="btn btn-warning">Incomplete</button>
+                    </form>
+                    {% endif %}
+                    <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Edit</a>
+                    <a class="btn btn-danger"  href="{% url 'task-delete' task.id %}">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <h3>No Items In List</h3>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
